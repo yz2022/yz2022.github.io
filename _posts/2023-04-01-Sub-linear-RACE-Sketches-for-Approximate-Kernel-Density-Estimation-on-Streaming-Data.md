@@ -2,8 +2,8 @@
 layout: post
 title: 【论文阅读笔记】Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
 subtitle: KDE method
-categories: 论文阅读笔记
-tags: [markdown]
+categories: markdown
+tags: [论文阅读笔记]
 ---
 
 ## Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
