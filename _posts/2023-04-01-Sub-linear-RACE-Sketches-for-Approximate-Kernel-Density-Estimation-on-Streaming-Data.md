@@ -1,13 +1,24 @@
 ---
 layout: post
-title: Kernel density estimation(KDE) with sketch
-subtitle: Each post also has a subtitle
+title: [论文阅读笔记]Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
+subtitle: KDE method
 categories: markdown
 tags: [论文阅读笔记]
 ---
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
 ## Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
 
-==Introduction==
+### ==Introduction==
 
 传统的KDE需要O(N)kernel function evaluation，o(Nd)memory；
 
@@ -21,11 +32,11 @@ tags: [论文阅读笔记]
 
   【在线数据集摘要】【网络中压缩分类】
 
-==Background==LSH和sketch介绍
+### ==Background== LSH和sketch介绍
 
 - LSH：
 
-  ![image-20230327112547863](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327112547863.png)
+  <img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011924513.png" alt="image-20230401192411484" style="zoom:80%;" />
 
   LSH family：一组哈希函数，满足在哈希映射下，相似点具有相同哈希值概率大
 
@@ -75,25 +86,25 @@ tags: [论文阅读笔记]
   hL(x)}。然后，我们增加计数器A[i, hi (x)]，i ={1，…L}。因此，每个计数器记录对应LSH桶的元素数量。
 
   定理1 ACE estimator
-  给定数据集D，具有有限范围[1,R]和参数p的LSH family H，通过连接来自H的p个独立哈希来构造LSH函数![image-20230327165612174](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327165612174.png)。($\mapsto$表示函数映射)
-  设A为用h(x)构造的ACE数组，对于任意查询q, ![image-20230327165848487](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327165848487.png)
+  给定数据集D，具有有限范围[1,R]和参数p的LSH family H，通过连接来自H的p个独立哈希来构造LSH函数<img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011925958.png" alt="image-20230401192505923" style="zoom:80%;" />($\mapsto$表示函数映射)
+  设A为用h(x)构造的ACE数组，对于任意查询q, ![image-20230401192522183](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011925218.png)
 
-  > 因为![image-20230327173601924](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327173601924.png)
+  > 因为![image-20230401192545630](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011925667.png)
 
   定理2 ACE estimator variance
-  给定一个查询q, ACE估计量A [h(q)]的方差服从以下不等式![image-20230327173721405](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327173721405.png)
+  给定一个查询q, ACE估计量A [h(q)]的方差服从以下不等式![image-20230401192557295](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011925320.png)
 
   这些结果表明，重复的ACE或RACE，可以在足够大的重复次数下，以非常低的相对误差估计KDE。
 
-==用RACE进行KDE==将ACE扩展到近似KDE上
+### ==用RACE进行KDE==  将ACE扩展到近似KDE上
 
 对于任何LSH kernel准确报告其KDE
 
 > median-of-means（MoM）：给定一个数据样本，MoM 估计器会打乱数据点，然后将它们分成 k 组，每组 m 个数据点。然后计算每个组的算术平均值。最后，我们计算得到的 k 算术平均值的中值。
 >
-> ![image-20230327194544734](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327194544734.png)
+> ![image-20230401192607940](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926975.png)
 >
-> ![image-20230327194522527](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327194522527.png)
+> ![](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926566.png)
 
 某个查询的KDE是数据集中附近元素数量的度量。通过使用几个LSH函数，创建数据集的多个超平面分区，RACE count是归入每个分区的点数，某个查询的RACE count是包含该查询的分区的密度。
 因此，每个RACE计数都很好地近似于查询时的KDE。
@@ -104,9 +115,9 @@ tags: [论文阅读笔记]
 
   因为核函数是距离越近碰撞概率越大，所以对于q，其结果对应了更多q附近的元素。因为想估计值=q的概率，所以越接近q概率越高，和核函数性质吻合。
 
-  <img src="C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327201745865.png" alt="image-20230327201745865" style="zoom:80%;" />
+  <img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926355.png" alt="image-20230327201745865" style="zoom:80%;" />
 
-  <img src="C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327204857799.png" alt="image-20230327204857799" style="zoom:67%;" />
+  <img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926903.png" alt="image-20230327204857799" style="zoom:67%;" />
 
   最终结果应该还会除以$\mathcal{D}$，因为RACE sketch求的是和而不是完整的KDE。
 
@@ -121,11 +132,11 @@ tags: [论文阅读笔记]
   :five:假设我们使用算法1从D1创建A1，从D2创建A2，使用相同的LSH函数，要构造D1∪D2的估计值，只需要将A1和A2的计数器相加即可。这个属性对于大规模分布式系统是至关重要的，因为A1和A2可以构建在不同的设备上。只要使用相同的LSH函数种子和RACE参数构造两个种族，就可以随时动态地合并或更新它们。
   :six:error-stable合并允许以多种方式并行RACE sketch。首先，L个不同的哈希函数计算可以在绘制和查询过程中并行完成，因为RACE数组的每一行都是完全自包含和独立的。其次，草图过程可以分布在多个process中，每个进程都可以绘制大型数据集的一个子集，并将其更新作为部分RACE草图发送。
 
-==Theory==
+### ==Theory==
 
 - RACE for Angular Kernel：
 
-  估计![image-20230327205324540](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230327205324540.png)
+  估计![image-20230327205324540](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926099.png)
 
   > 如果$w$是向量，那么$w^\top x$不是表示转置相乘而是表示内积，对应位置相乘相加；同时，矩阵卷积对应的每一个点相当于卷积核与原矩阵做内积。
   >
@@ -133,7 +144,7 @@ tags: [论文阅读笔记]
 
   碰撞概率形成半正定核
 
-  ![image-20230328114559350](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328114559350.png)**如何计算的？**
+  ![image-20230328114559350](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926636.png)**如何计算的？**
 
   首先，$k (x, y)∝f (d (x, y))$，而$d (x, y))$可用$\theta(x,y)$替代，所以$k$是一个关于$\theta$的单调递减函数。取极值，1)$\theta=0,k=1$ ;2)$\theta=\pi,k=0$ ;3)$\theta=\pi/2,k=1/2$，在笛卡尔坐标系作图并待定系数得k(x,y)=…
 
@@ -141,17 +152,17 @@ tags: [论文阅读笔记]
 
   许多LSH kernel不具有有限范围R，所以碰撞概率不在有限范围内，相应的LSH kernel难以估计。将其通过rehashing技术使得索引控制在R范围内
 
-  > 误差函数erf：![image-20230328150019194](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328150019194.png)
+  > 误差函数erf：![image-20230328150019194](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926825.png)
   >
-  > ![image-20230328150232058](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328150232058.png)
+  > ![image-20230328150232058](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926434.png)
   >
   > 指数kernel： 指数核函数就是高斯核函数的变种，它仅仅是将向量之间的L2距离调整为L1距离，这样改动会对参数的依赖性降低，但是适用范围相对狭窄。其数学形式如下：
   >
-  > <img src="https://img-blog.csdn.net/20150724004246915" alt="img" style="zoom:67%;" />
+  > <img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926553.jpeg" alt="img" style="zoom:67%;" />
   >
   > 欧氏距离的LSH function：
   >
-  > ![image-20230328205727027](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328205727027.png)
+  > ![image-20230328205727027](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011926032.png)
 
 
 
@@ -159,11 +170,11 @@ tags: [论文阅读笔记]
 
   当LSH kernel的形式不是$k(x,q)$而是$k(d(x,q))$时，碰撞概率不再是LSH kernel。
 
-  >  ![image-20230328153504869](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328153504869.png)
+  >  ![image-20230328153504869](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927878.png)
   >
   >  $碰撞概率z(x,q)=f(d(x,q))可用RACE估计碰撞概率z的KDE \\ \to d(x,q)=f^{-1}(f(d((x,q))))\\ \to kernel=k(f^{-1}(f(d((x,q))))) \\ \to g(z)=k(f^{-1}(z(x,q)))$
   >
-  >  [20]中的泰勒级数系数：![image-20230328163532830](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328163532830.png)用于求逆函数分解成多项式的结果，
+  >  [20]中的泰勒级数系数：![image-20230328163532830](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927488.png)用于求逆函数分解成多项式的结果，
   >
   >  进行KDE估计例子：
   >
@@ -173,7 +184,7 @@ tags: [论文阅读笔记]
 
   > 碰撞概率$z$就是$k(x,q)$，已知$k(x,q)$表达式，又$k(x,q)=z(x,q)$，由于kernel $d(x,q)=f^{-1}(z(x,q))$，对$d(x,q)$进行泰勒展开，可得各项系数，加上已知的z值即可得到d
 
-==Discussion==
+### ==Discussion==
 
 - Computation 和Memory的权衡：
 
@@ -196,7 +207,7 @@ tags: [论文阅读笔记]
 
   > 稀疏数组：
   >
-  > <img src="C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328173640073.png" alt="image-20230328173640073" style="zoom:80%;" />
+  > <img src="https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927772.png" alt="image-20230328173640073" style="zoom:80%;" />
 
 - Privacy：
 
@@ -205,7 +216,7 @@ tags: [论文阅读笔记]
   内核合并方法存储数据集的聚合摘要，但仍然需要用户数据属性的平均值。
   RACE是通过一个随机哈希函数构造的，它根本不需要存储或合并元素。
 
-==Experiments==
+### ==Experiments==
 
 使用p-stable Euclidean LSH kernel
 
@@ -217,13 +228,12 @@ tags: [论文阅读笔记]
 
   2）HBS 基于哈希的sketch：用一个LSH函数将数据集中每个点hash到一个哈希表中，从哈希表中采样点，根据每个哈希桶大小对他们进行加权
 
-  > 哈希表：![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2l0aHVhbmdxaW5nL215aW1nL21hc3Rlci9pbWcvMjAxOTEyMDEyMzM1MDIucG5n?x-oss-process=image/format,png)
+  > 哈希表：![img](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927788.png)
   >
-  > 哈希桶：![image-20230328181105447](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328181105447.png)
+  > 哈希桶：![image-20230328181105447](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927364.png)
 
   3）稀疏kernel近似（SKA）：找到数据集中的k个中心位置并加权
 
-  ![image-20230328213245875](C:\Users\Zhou Yi\AppData\Roaming\Typora\typora-user-images\image-20230328213245875.png)
+  ![image-20230328213245875](https://raw.githubusercontent.com/yz2022/notes/main/img/202304011927435.png)
 
   
-
