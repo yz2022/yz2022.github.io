@@ -1,3 +1,4 @@
+
 ---
 layout: post
 title: [论文阅读笔记]Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
@@ -5,20 +6,10 @@ subtitle: KDE method
 categories: markdown
 tags: [论文阅读笔记]
 ---
-<head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$','$']]
-            }
-        });
-    </script>
-</head>
+
 ## Sub-linear RACE Sketches for Approximate Kernel Density Estimation on Streaming Data——WWW 2020
 
-### ==Introduction==
+### Introduction
 
 传统的KDE需要O(N)kernel function evaluation，o(Nd)memory；
 
@@ -32,7 +23,9 @@ tags: [论文阅读笔记]
 
   【在线数据集摘要】【网络中压缩分类】
 
-### ==Background== LSH和sketch介绍
+### Background 
+
+LSH和sketch介绍
 
 - LSH：
 
@@ -96,7 +89,9 @@ tags: [论文阅读笔记]
 
   这些结果表明，重复的ACE或RACE，可以在足够大的重复次数下，以非常低的相对误差估计KDE。
 
-### ==用RACE进行KDE==  将ACE扩展到近似KDE上
+### 用RACE进行KDE
+
+将ACE扩展到近似KDE上
 
 对于任何LSH kernel准确报告其KDE
 
@@ -132,7 +127,7 @@ tags: [论文阅读笔记]
   :five:假设我们使用算法1从D1创建A1，从D2创建A2，使用相同的LSH函数，要构造D1∪D2的估计值，只需要将A1和A2的计数器相加即可。这个属性对于大规模分布式系统是至关重要的，因为A1和A2可以构建在不同的设备上。只要使用相同的LSH函数种子和RACE参数构造两个种族，就可以随时动态地合并或更新它们。
   :six:error-stable合并允许以多种方式并行RACE sketch。首先，L个不同的哈希函数计算可以在绘制和查询过程中并行完成，因为RACE数组的每一行都是完全自包含和独立的。其次，草图过程可以分布在多个process中，每个进程都可以绘制大型数据集的一个子集，并将其更新作为部分RACE草图发送。
 
-### ==Theory==
+### Theory
 
 - RACE for Angular Kernel：
 
@@ -184,7 +179,7 @@ tags: [论文阅读笔记]
 
   > 碰撞概率$z$就是$k(x,q)$，已知$k(x,q)$表达式，又$k(x,q)=z(x,q)$，由于kernel $d(x,q)=f^{-1}(z(x,q))$，对$d(x,q)$进行泰勒展开，可得各项系数，加上已知的z值即可得到d
 
-### ==Discussion==
+### Discussion
 
 - Computation 和Memory的权衡：
 
@@ -216,7 +211,7 @@ tags: [论文阅读笔记]
   内核合并方法存储数据集的聚合摘要，但仍然需要用户数据属性的平均值。
   RACE是通过一个随机哈希函数构造的，它根本不需要存储或合并元素。
 
-### ==Experiments==
+### Experiments
 
 使用p-stable Euclidean LSH kernel
 
